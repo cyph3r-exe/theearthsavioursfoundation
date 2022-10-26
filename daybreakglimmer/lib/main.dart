@@ -1,17 +1,62 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, must_call_super
+
+import 'dart:async';
 
 import 'package:flutter/material.dart';
-// ignore: unused_import
+import 'package:flutter/services.dart';
 
-void main() => runApp(EarthSaviours());
+void main() => {
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.transparent)),
+  runApp(EarthSaviours())
+};
 
 class EarthSaviours extends StatelessWidget {
   const EarthSaviours({Key? key}) : super(key: key);
   //root application
   @override 
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: LogInSignIn(),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: _Splashscreen() ,
+    );
+  }
+}
+
+class _Splashscreen extends StatefulWidget {
+  const _Splashscreen({Key? key}) : super(key: key);
+
+  @override
+  State<_Splashscreen> createState() => __SplashscreenState();
+} 
+
+class __SplashscreenState extends State<_Splashscreen> {
+
+  @override
+  void initState() {
+    
+    Timer(Duration(seconds: 3), ()=> Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LogInSignIn())));
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end:  Alignment.bottomRight,
+              colors: const [Color.fromRGBO(228, 205, 205, 0.75), Color.fromRGBO(161, 91, 91, 0.75)],
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.network('https://media.discordapp.net/attachments/1033448117703561326/1033601816224595978/logowithoutbg.png?width=499&height=499', height: 300, width: 300,)
+            ],
+          ),
+        ),
     );
   }
 }
@@ -66,7 +111,11 @@ class LogInSignIn extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15),
                         color: Color.fromRGBO(161, 91, 91, 0.75),
                       ),
-                      child: ElevatedButton(onPressed: null, 
+                      child: ElevatedButton(onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return const Login();
+                            }));
+                      }, 
                         child: Text('Login',
                         style: TextStyle(
                           fontFamily: 'Arial Rounded MT Bold',
@@ -82,7 +131,10 @@ class LogInSignIn extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15),
                         color: Color.fromRGBO(161, 91, 91, 0.75),
                       ),
-                      child: ElevatedButton(onPressed: null, 
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => SignIn()));
+                        },
                         child: Text('Sign In',
                         style: TextStyle(
                           fontFamily: 'Arial Rounded MT Bold',
@@ -93,6 +145,8 @@ class LogInSignIn extends StatelessWidget {
                   ],
                 )
               ),),
+
+              //Images 
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -129,3 +183,51 @@ class LogInSignIn extends StatelessWidget {
     );
   }
 }
+
+
+//* Login page starts from here. 
+
+class Login extends StatelessWidget {
+  const Login({Key? key}) : super(key: key);
+  
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('T.E.S.F', 
+        style: TextStyle(
+          fontFamily: 'Arial Rounded MT Bold'
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Color.fromRGBO(228, 205, 205, 0.75),
+        foregroundColor: Colors.black,
+        shadowColor: Colors.black,
+        elevation: 20,
+      ),
+    );
+  }
+}
+
+//? SignIn PAGE
+class  SignIn extends StatelessWidget {
+  const SignIn({Key? key}) : super(key: key);
+
+  @override 
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Helping Hands',
+        style: TextStyle(
+          fontFamily: 'Arial Rounded MT Bold'
+        )),
+        centerTitle: true,
+        backgroundColor: Color.fromRGBO(228, 205, 205, 0.75),
+        foregroundColor: Colors.black,
+        shadowColor: Colors.black,
+        elevation: 20,
+      ),
+    );
+  }
+}
+//? Home Page
