@@ -405,13 +405,14 @@ class SignIn extends StatelessWidget {
               children: <Widget>[
                 Positioned.fill(
                   child: Container(
+                    alignment: Alignment.center,
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(
                         colors: <Color>[
-                          Color(0xFF0D47A1),
-                          Color(0xFF1976D2),
-                          Color(0xFF42A5F5),
-                        ],
+                          Color.fromRGBO(228, 205, 205, 0.75),
+                          Color.fromARGB(104, 161, 91, 91),
+                          Color.fromRGBO(161, 91, 91, 0.75),
+                        ]
                       ),
                     ),
                   ),
@@ -422,7 +423,11 @@ class SignIn extends StatelessWidget {
                     textStyle: const TextStyle(fontSize: 20),
                   ),
                   onPressed: () {},
-                  child: const Text('Gradient'),
+                  child: const Text('Sign Up',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),),
                 ),
               ],
             ),
