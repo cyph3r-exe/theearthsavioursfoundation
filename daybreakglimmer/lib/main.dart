@@ -127,8 +127,9 @@ class LogInSignIn extends StatelessWidget {
                                 if (states.contains(MaterialState.pressed)) {
                                   return Color.fromRGBO(228, 205, 205, 0.75);
                                 }
-                                return Color.fromRGBO(161, 91, 91, 0.75); // Use the component's default.
-                              },//161, 91, 91, 0.75
+                                return Color.fromRGBO(161, 91, 91,
+                                    0.75); // Use the component's default.
+                              }, //161, 91, 91, 0.75
                             ),
                           ),
                           onPressed: () {
@@ -161,8 +162,9 @@ class LogInSignIn extends StatelessWidget {
                                 if (states.contains(MaterialState.pressed)) {
                                   return Color.fromRGBO(228, 205, 205, 0.75);
                                 }
-                                return Color.fromRGBO(161, 91, 91, 0.75); // Use the component's default.
-                              },//161, 91, 91, 0.75
+                                return Color.fromRGBO(161, 91, 91,
+                                    0.75); // Use the component's default.
+                              }, //161, 91, 91, 0.75
                             ),
                           ),
                           onPressed: () {
@@ -253,6 +255,29 @@ class Login extends StatelessWidget {
                   color: Color.fromRGBO(228, 205, 205, 0.75),
                   borderRadius: BorderRadius.circular(15),
                 ),
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.resolveWith<Color?>(
+                      (Set<MaterialState> states) {
+                        if (states.contains(MaterialState.pressed)) {
+                          return Color.fromRGBO(228, 205, 205, 0.75);
+                        }
+                        return Color.fromRGBO(
+                            161, 91, 91, 0.75); // Use the component's default.
+                      }, //161, 91, 91, 0.75
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => HomePage()));
+                  },
+                  child: Text(
+                    '->',
+                    style: TextStyle(
+                      fontFamily: 'Arial Rounded MT Bold',
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
@@ -306,3 +331,42 @@ class SignIn extends StatelessWidget {
   }
 }
 //? Home Page
+
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title:
+            Text('Home', style: TextStyle(fontFamily: 'Arial Rounded MT Bold')),
+        centerTitle: true,
+        backgroundColor: Color.fromRGBO(228, 205, 205, 0.75),
+        foregroundColor: Colors.black,
+        shadowColor: Colors.black,
+        elevation: 20,
+      ),
+      body: Container(
+        constraints: const BoxConstraints.expand(),
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: NetworkImage(
+                    'https://cdn.discordapp.com/attachments/1033448117703561326/1033448248385478738/AppBackground.png'),
+                fit: BoxFit.cover),
+                ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Color.fromRGBO(161, 91, 91, 0.75),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: const [
+            IconButton(onPressed: null, icon: Icon(Icons.warning_rounded), tooltip: 'Notifications', iconSize: 36,),
+            IconButton(onPressed: null, icon: Icon(Icons.home_filled), tooltip: 'Home', iconSize:36,),
+            IconButton(onPressed: null, icon: Icon(Icons.person), tooltip: 'Profile', iconSize: 36,),
+          ],
+        ),
+      ),
+    );
+  }
+}
