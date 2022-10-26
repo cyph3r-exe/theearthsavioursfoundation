@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, must_call_super
+// ignore_for_file: prefer_const_constructors, must_call_super, must_be_immutable
 
 import 'dart:async';
 import 'package:flutter/material.dart';
@@ -289,7 +289,13 @@ class Login extends StatelessWidget {
 
 //? SignIn PAGE
 class SignIn extends StatelessWidget {
-  const SignIn({Key? key}) : super(key: key);
+  SignIn({Key? key}) : super(key: key);
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController contactnumberController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -305,27 +311,129 @@ class SignIn extends StatelessWidget {
         shadowColor: Colors.black,
         elevation: 20,
       ),
+
+      //!Body of Sign In Page
       body: Container(
+        alignment: Alignment.center,
         constraints: const BoxConstraints.expand(),
         decoration: const BoxDecoration(
             image: DecorationImage(
                 image: NetworkImage(
                     'https://cdn.discordapp.com/attachments/1033448117703561326/1033448248385478738/AppBackground.png'),
                 fit: BoxFit.cover)),
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Container(
-                width: 350,
-                height: 900,
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(228, 205, 205, 0.75),
-                  borderRadius: BorderRadius.circular(15),
+        child: PhysicalModel(
+          color: Colors.transparent,
+          shadowColor: Colors.black,
+          elevation: 20,
+          child: Container(
+            width: 350,
+            height: 480,
+            decoration: BoxDecoration(
+              color: Color.fromRGBO(228, 205, 205, 0.75),
+            ),
+            child: ListView(
+              children: [
+                Container(
+                  margin: EdgeInsets.all(5),
+                  child: TextFormField(
+                    controller: nameController,
+                    textAlign: TextAlign.left,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Colors.grey, width: 0.0)),
+                      labelText: 'Name',
+                    ),
+                  ),
                 ),
-              ),
-            ],
+                Container(
+                  margin: EdgeInsets.all(5),
+                  child: TextFormField(
+                    controller: usernameController,
+                    textAlign: TextAlign.left,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Colors.grey, width: 0.0)),
+                      labelText: 'Username',
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.all(5),
+                  child: TextFormField(
+                    controller: passwordController,
+                    textAlign: TextAlign.left,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Colors.grey, width: 0.0)),
+                      labelText: 'Password',
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.all(5),
+                  child: TextFormField(
+                    controller: contactnumberController,
+                    textAlign: TextAlign.left,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Colors.grey, width: 0.0)),
+                      labelText: 'Contact Number',
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.all(5),
+                  child: TextFormField(
+                    controller: addressController,
+                    textAlign: TextAlign.left,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Colors.grey, width: 0.0)),
+                      labelText: 'Address',
+                    ),
+                  ),
+                ),
+                SizedBox(height: 30),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(4),
+            child: Stack(
+              children: <Widget>[
+                Positioned.fill(
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: <Color>[
+                          Color(0xFF0D47A1),
+                          Color(0xFF1976D2),
+                          Color(0xFF42A5F5),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.all(16.0),
+                    textStyle: const TextStyle(fontSize: 20),
+                  ),
+                  onPressed: () {},
+                  child: const Text('Gradient'),
+                ),
+              ],
+            ),
+          )
+              ],
+            ),
           ),
         ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: TextButton(onPressed: null, child: Text('Forgot Password?')),
       ),
     );
   }
@@ -350,26 +458,42 @@ class HomePage extends StatelessWidget {
       body: Container(
         constraints: const BoxConstraints.expand(),
         decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: NetworkImage(
-                    'https://cdn.discordapp.com/attachments/1033448117703561326/1033448248385478738/AppBackground.png'),
-                fit: BoxFit.cover),
-                ),
+          image: DecorationImage(
+              image: NetworkImage(
+                  'https://cdn.discordapp.com/attachments/1033448117703561326/1033448248385478738/AppBackground.png'),
+              fit: BoxFit.cover),
+        ),
       ),
       bottomNavigationBar: BottomAppBar(
         color: Color.fromRGBO(161, 91, 91, 0.75),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: const [
-            IconButton(onPressed: null, icon: Icon(Icons.warning_rounded), tooltip: 'Notifications', iconSize: 36,),
-            IconButton(onPressed: null, icon: Icon(Icons.home_filled), tooltip: 'Home', iconSize:36,),
-            IconButton(onPressed: null, icon: Icon(Icons.person), tooltip: 'Profile', iconSize: 36,),
+            IconButton(
+              onPressed: null,
+              icon: Icon(Icons.warning_rounded),
+              tooltip: 'Notifications',
+              iconSize: 36,
+            ),
+            IconButton(
+              onPressed: null,
+              icon: Icon(Icons.home_filled),
+              tooltip: 'Home',
+              iconSize: 36,
+            ),
+            IconButton(
+              onPressed: null,
+              icon: Icon(Icons.person),
+              tooltip: 'Profile',
+              iconSize: 36,
+            ),
           ],
         ),
       ),
     );
   }
 }
+
 class Profile extends StatelessWidget {
   const Profile({Key? key}) : super(key: key);
 
@@ -377,8 +501,8 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:
-            Text('Profile', style: TextStyle(fontFamily: 'Arial Rounded MT Bold')),
+        title: Text('Profile',
+            style: TextStyle(fontFamily: 'Arial Rounded MT Bold')),
         centerTitle: true,
         backgroundColor: Color.fromRGBO(228, 205, 205, 0.75),
         foregroundColor: Colors.black,
@@ -388,20 +512,35 @@ class Profile extends StatelessWidget {
       body: Container(
         constraints: const BoxConstraints.expand(),
         decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: NetworkImage(
-                    'https://cdn.discordapp.com/attachments/1033448117703561326/1033448248385478738/AppBackground.png'),
-                fit: BoxFit.cover),
-                ),
+          image: DecorationImage(
+              image: NetworkImage(
+                  'https://cdn.discordapp.com/attachments/1033448117703561326/1033448248385478738/AppBackground.png'),
+              fit: BoxFit.cover),
+        ),
       ),
       bottomNavigationBar: BottomAppBar(
         color: Color.fromRGBO(161, 91, 91, 0.75),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: const [
-            IconButton(onPressed: null, icon: Icon(Icons.warning_rounded), tooltip: 'Notifications', iconSize: 36,),
-            IconButton(onPressed: null, icon: Icon(Icons.home_filled), tooltip: 'Home', iconSize:36,),
-            IconButton(onPressed: null, icon: Icon(Icons.person), tooltip: 'Profile', iconSize: 36,),
+            IconButton(
+              onPressed: null,
+              icon: Icon(Icons.warning_rounded),
+              tooltip: 'Notifications',
+              iconSize: 36,
+            ),
+            IconButton(
+              onPressed: null,
+              icon: Icon(Icons.home_filled),
+              tooltip: 'Home',
+              iconSize: 36,
+            ),
+            IconButton(
+              onPressed: null,
+              icon: Icon(Icons.person),
+              tooltip: 'Profile',
+              iconSize: 36,
+            ),
           ],
         ),
       ),
