@@ -174,7 +174,7 @@ class LogInSignIn extends StatelessWidget {
                                     builder: (context) => SignIn()));
                           },
                           child: Text(
-                            'Sign In',
+                            'Sign Up',
                             style: TextStyle(
                               fontFamily: 'Arial Rounded MT Bold',
                             ),
@@ -341,6 +341,44 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title:
             Text('Home', style: TextStyle(fontFamily: 'Arial Rounded MT Bold')),
+        centerTitle: true,
+        backgroundColor: Color.fromRGBO(228, 205, 205, 0.75),
+        foregroundColor: Colors.black,
+        shadowColor: Colors.black,
+        elevation: 20,
+      ),
+      body: Container(
+        constraints: const BoxConstraints.expand(),
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: NetworkImage(
+                    'https://cdn.discordapp.com/attachments/1033448117703561326/1033448248385478738/AppBackground.png'),
+                fit: BoxFit.cover),
+                ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Color.fromRGBO(161, 91, 91, 0.75),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: const [
+            IconButton(onPressed: null, icon: Icon(Icons.warning_rounded), tooltip: 'Notifications', iconSize: 36,),
+            IconButton(onPressed: null, icon: Icon(Icons.home_filled), tooltip: 'Home', iconSize:36,),
+            IconButton(onPressed: null, icon: Icon(Icons.person), tooltip: 'Profile', iconSize: 36,),
+          ],
+        ),
+      ),
+    );
+  }
+}
+class Profile extends StatelessWidget {
+  const Profile({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title:
+            Text('Profile', style: TextStyle(fontFamily: 'Arial Rounded MT Bold')),
         centerTitle: true,
         backgroundColor: Color.fromRGBO(228, 205, 205, 0.75),
         foregroundColor: Colors.black,
