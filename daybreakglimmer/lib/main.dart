@@ -220,7 +220,6 @@ class LogInSignIn extends StatelessWidget {
 }
 
 //* Login page starts from here.
-
 class Login extends StatelessWidget {
   const Login({Key? key}) : super(key: key);
 
@@ -327,12 +326,31 @@ class SignIn extends StatelessWidget {
           elevation: 20,
           child: Container(
             width: 350,
-            height: 480,
+            height: 500,
             decoration: BoxDecoration(
               color: Color.fromRGBO(228, 205, 205, 0.75),
             ),
             child: ListView(
               children: [
+                Container(
+                  alignment: Alignment.center,
+                  width: 200,
+                  height: 50,
+                  margin:  EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Color.fromRGBO(161, 91, 91, 0.75)
+                    
+                  ),
+                  child: Text('Sign Up', 
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w100,
+                    fontSize: 24,
+                    fontFamily: 'Arial Rounded MT Bold',
+                    color: Colors.black,
+                  ),),
+                ),
                 Container(
                   margin: EdgeInsets.all(5),
                   child: TextFormField(
@@ -398,40 +416,27 @@ class SignIn extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 30),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(4),
-            child: Stack(
-              children: <Widget>[
-                Positioned.fill(
-                  child: Container(
-                    alignment: Alignment.center,
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: <Color>[
-                          Color.fromRGBO(228, 205, 205, 0.75),
-                          Color.fromARGB(104, 161, 91, 91),
-                          Color.fromRGBO(161, 91, 91, 0.75),
-                        ]
-                      ),
-                    ),
+                TextButton(onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => HomePage()));
+                  },
+                 child: Container(
+                  alignment: Alignment.center,
+                  width: 200,
+                  height: 50,
+                  margin:  EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Color.fromRGBO(161, 91, 91, 0.75),               
                   ),
-                ),
-                TextButton(
-                  style: TextButton.styleFrom(
-                    padding: const EdgeInsets.all(16.0),
-                    textStyle: const TextStyle(fontSize: 20),
-                  ),
-                  onPressed: () {},
-                  child: const Text('Sign Up',
+                  child: Text('Proceed', 
                   textAlign: TextAlign.center,
                   style: TextStyle(
+                    fontFamily: 'Arial Rounded MT Bold',
+                    fontSize: 24,
                     color: Colors.black,
                   ),),
-                ),
-              ],
-            ),
-          )
+                ))
               ],
             ),
           ),
