@@ -329,6 +329,7 @@ class SignIn extends StatelessWidget {
             height: 500,
             decoration: BoxDecoration(
               color: Color.fromRGBO(228, 205, 205, 0.75),
+              borderRadius: BorderRadius.circular(15)
             ),
             child: ListView(
               children: [
@@ -433,7 +434,7 @@ class SignIn extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: 'Arial Rounded MT Bold',
-                    fontSize: 24,
+                    fontSize: 20,
                     color: Colors.black,
                   ),),
                 ))
