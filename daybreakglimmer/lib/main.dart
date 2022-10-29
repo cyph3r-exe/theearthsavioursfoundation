@@ -404,19 +404,6 @@ class SignIn extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.all(5),
-                  child: TextFormField(
-                    controller: addressController,
-                    textAlign: TextAlign.left,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Colors.grey, width: 0.0)),
-                      labelText: 'Address',
-                    ),
-                  ),
-                ),
                 TextButton(onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => HomePage()));
