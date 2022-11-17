@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 void main() => {
       SystemChrome.setSystemUIOverlayStyle(
@@ -12,6 +13,10 @@ void main() => {
     };
 
 void _homepage(BuildContext context) {
+  Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage()));
+}
+
+void _adminhomepage(BuildContext context) {
   Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage()));
 }
 
@@ -26,12 +31,16 @@ class EarthSaviours extends StatelessWidget {
     );
   }
 }
+
 void loginalert(BuildContext context) {
   final alert = AlertDialog(
     title: const Text('Login Failed'),
     content: const Text('Username or Password was incorrect'),
     actions: [
-      TextButton(onPressed: () => Navigator.pop(context), child: const Text('Retry'),)
+      TextButton(
+        onPressed: () => Navigator.pop(context),
+        child: const Text('Retry'),
+      )
     ],
   );
   showDialog(
@@ -41,6 +50,7 @@ void loginalert(BuildContext context) {
     },
   );
 }
+
 class _Splashscreen extends StatefulWidget {
   const _Splashscreen({Key? key}) : super(key: key);
 
@@ -89,7 +99,7 @@ class __SplashscreenState extends State<_Splashscreen> {
   }
 }
 
-//* Main login and sign in page common for all. 
+//* Main login and sign in page common for all.
 //* This will be starting point of the app after the splash screens
 class LogInSignIn extends StatelessWidget {
   const LogInSignIn({Key? key}) : super(key: key);
@@ -314,11 +324,15 @@ class AdminHomepage extends StatelessWidget {
           IconButton(
             onPressed: () {
               Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => Profile())); //replace with posts screen
-            }, 
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          Profile())); //replace with posts screen
+            },
             icon: Icon(Icons.post_add),
             iconSize: 36,
-            tooltip: 'Help Post',)
+            tooltip: 'Help Post',
+          )
         ],
       ),
       body: Container(
@@ -360,8 +374,8 @@ class AdminHomepage extends StatelessWidget {
   }
 }
 
-//* Login page starts from here. Point to be noted here is 
-//* once the user enters password for login, user will be checked if it is admin or not, 
+//* Login page starts from here. Point to be noted here is
+//* once the user enters password for login, user will be checked if it is admin or not,
 //* If the user is an admin and the password given is correct, then AdminHomePage will load
 //* Else the user is a normal user and the password given is correct, then HomePage will load.
 
@@ -424,69 +438,74 @@ class Login extends StatelessWidget {
                 ),
               ),
               Container(
-                  margin: EdgeInsets.all(5),
-                  child: TextFormField(
-                    controller: loginuserController,
-                    textAlign: TextAlign.left,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Colors.grey, width: 0.0)),
-                      labelText: 'Username',
-                    ),
+                margin: EdgeInsets.all(5),
+                child: TextFormField(
+                  controller: loginuserController,
+                  textAlign: TextAlign.left,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(color: Colors.grey, width: 0.0)),
+                    labelText: 'Username',
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.all(5),
-                  child: TextFormField(
-                    controller: loginpassController,
-                    textAlign: TextAlign.left,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Colors.grey, width: 0.0)),
-                      labelText: 'Password',
-                    ),
+              ),
+              Container(
+                margin: EdgeInsets.all(5),
+                child: TextFormField(
+                  controller: loginpassController,
+                  textAlign: TextAlign.left,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(color: Colors.grey, width: 0.0)),
+                    labelText: 'Password',
                   ),
                 ),
-                TextButton(
-                    onPressed: () async {
-                      var url =
-                          Uri.parse('https://daybreaklimit.herokuapp.com/auth/login');
-                      var response = await http.post(url, body: {
-                        'user[username]': loginuserController.text,
-                        'user[password]':loginpassController.text,
-                      });
-                      if (response.statusCode == 200) {
-                        print(response.body);
+              ),
+              TextButton(
+                  onPressed: () async {
+                    var url = Uri.parse(
+                        'https://daybreaklimit.herokuapp.com/auth/login');
+                    var response = await http.post(url, body: {
+                      'user[username]': loginuserController.text,
+                      'user[password]': loginpassController.text,
+                    });
+                    if (response.statusCode == 200) {
+                      var decResponse = json.decode('response');
+                      var adminvalue = json.decode(decResponse['admin']);
+                      print(response.body);
+
+                      if (adminvalue == true) {
+                        return _adminhomepage(context);
+                      } else {
                         return _homepage(context);
                       }
-                      if (response.statusCode == 401) {
-                        print(response.body);
-                        return loginalert(context);
-                      }
-                      
-                    },
-                    child: Container(
-                      alignment: Alignment.center,
-                      width: 200,
-                      height: 50,
-                      margin: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Color.fromRGBO(161, 91, 91, 0.75),
+                    }
+                    if (response.statusCode == 401) {
+                      print(response.body);
+                      return loginalert(context);
+                    }
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: 200,
+                    height: 50,
+                    margin: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Color.fromRGBO(161, 91, 91, 0.75),
+                    ),
+                    child: Text(
+                      'Proceed',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Arial Rounded MT Bold',
+                        fontSize: 20,
+                        color: Colors.black,
                       ),
-                      child: Text(
-                        'Proceed',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontFamily: 'Arial Rounded MT Bold',
-                          fontSize: 20,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ))
-                
+                    ),
+                  ))
             ]),
           ),
         ),
@@ -714,6 +733,96 @@ class Profile extends StatelessWidget {
         //* Profile page body of the person viewing the app.
 
         child: Column(),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Color.fromRGBO(161, 91, 91, 0.75),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: const [
+            IconButton(
+              onPressed: null,
+              icon: Icon(Icons.warning_rounded),
+              tooltip: 'Notifications',
+              iconSize: 36,
+            ),
+            IconButton(
+              onPressed: null,
+              icon: Icon(Icons.home_filled),
+              tooltip: 'Home',
+              iconSize: 36,
+            ),
+            IconButton(
+              onPressed: null,
+              icon: Icon(Icons.person),
+              tooltip: 'Profile',
+              iconSize: 36,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class AdminPost extends StatelessWidget {
+  const AdminPost({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Create Post',
+            style: TextStyle(fontFamily: 'Arial Rounded MT Bold')),
+        centerTitle: true,
+        backgroundColor: Color.fromRGBO(228, 205, 205, 0.75),
+        foregroundColor: Colors.black,
+        shadowColor: Colors.black,
+        elevation: 20,
+      ),
+      body: Container(
+        constraints: const BoxConstraints.expand(),
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+              image: NetworkImage(
+                  'https://cdn.discordapp.com/attachments/1033448117703561326/1033448248385478738/AppBackground.png'),
+              fit: BoxFit.cover),
+        ),
+
+        //* Admin post page page body of the person viewing the app.
+
+        child: PhysicalModel(
+          color: Colors.transparent,
+          shadowColor: Colors.black,
+          elevation: 20,
+          child: Container(
+            width: 350,
+            height: 600,
+            decoration: BoxDecoration(
+                color: Color.fromRGBO(228, 205, 205, 0.75),
+                borderRadius: BorderRadius.circular(15)),
+            child: ListView(children: [
+              Container(
+                alignment: Alignment.center,
+                width: 200,
+                height: 50,
+                margin: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Color.fromRGBO(161, 91, 91, 0.75)),
+                child: Text(
+                  'Sign Up',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w100,
+                    fontSize: 24,
+                    fontFamily: 'Arial Rounded MT Bold',
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ]),
+          ),
+        ),
       ),
       bottomNavigationBar: BottomAppBar(
         color: Color.fromRGBO(161, 91, 91, 0.75),
