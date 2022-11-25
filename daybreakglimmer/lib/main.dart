@@ -1,14 +1,10 @@
 // ignore_for_file: prefer_const_constructors, must_call_super, must_be_immutable, avoid_print, use_build_context_synchronously, depend_on_referenced_packages
-
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:image_picker/image_picker.dart';
-import 'dart:io' as io;
 
-final ImagePicker _picker = ImagePicker();
 void main() => {
       SystemChrome.setSystemUIOverlayStyle(
           SystemUiOverlayStyle(statusBarColor: Colors.transparent)),
@@ -16,7 +12,7 @@ void main() => {
     };
 
 void _homepage(BuildContext context) {
-  Navigator.pushReplacement(
+    Navigator.pushReplacement(
       context, MaterialPageRoute(builder: (context) => Homepage()));
 }
 
@@ -210,7 +206,7 @@ class LogInSignIn extends StatelessWidget {
                                     builder: (context) => SignIn()));
                           },
                           child: Text(
-                            'Sign Up',
+                            'Sign Up', 
                             style: TextStyle(
                               fontFamily: 'Arial Rounded MT Bold',
                             ),
@@ -263,7 +259,7 @@ class Homepage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: <Widget>[
+                actions: <Widget>[
           IconButton(
             onPressed: () {
               Navigator.pushReplacement(
@@ -298,7 +294,7 @@ class Homepage extends StatelessWidget {
         color: Color.fromRGBO(161, 91, 91, 0.75),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
+          children:  [
             IconButton(
               onPressed: null,
               icon: Icon(Icons.warning_rounded),
@@ -313,8 +309,8 @@ class Homepage extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => Profile()));
+                Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => Profile()));
               },
               icon: Icon(Icons.person),
               tooltip: 'Profile',
@@ -494,7 +490,7 @@ class Login extends StatelessWidget {
                       'user[username]': loginuserController.text,
                       'user[password]': loginpassController.text,
                     });
-
+                    
                     if (response.statusCode == 200) {
                       var decResponse = jsonDecode(response.body);
                       var tokenvalue = decResponse['token'];
@@ -502,13 +498,13 @@ class Login extends StatelessWidget {
                       print(tokenvalue);
                       print(refreshtokenvalue);
 
-                      var authurl = Uri.parse(
-                          'https://daybreaklimit.herokuapp.com/users/me');
+                      var authurl = Uri.parse('https://daybreaklimit.herokuapp.com/users/me');
 
-                      var authresponse = await http.get(authurl,
-                          headers: {"Authorization": "$tokenvalue"});
-
-                      if (authresponse.statusCode == 200) {
+                      var authresponse = await http.get(authurl, headers: {
+                        "Authorization" : "$tokenvalue"
+                      });
+                      
+                      if (authresponse.statusCode == 200){
                         var authadmin = jsonDecode(authresponse.body);
                         var user = authadmin['user'];
                         var authuser = user['admin'];
@@ -519,8 +515,10 @@ class Login extends StatelessWidget {
                         } else {
                           return _homepage(context);
                         }
-                      }
+
+                      } 
                       print(authresponse.body);
+                      
                     }
                     if (response.statusCode == 401) {
                       print(response.body);
@@ -746,57 +744,199 @@ class SignIn extends StatelessWidget {
   }
 }
 
-class Profile extends StatelessWidget {
+
+
+class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
+
+  @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
+      backgroundColor: Color(0xFFE4CDCD),
       appBar: AppBar(
-        title: Text('Profile',
-            style: TextStyle(fontFamily: 'Arial Rounded MT Bold')),
+        title: Text(
+          'T.E.S.F',
+          style: TextStyle(fontFamily: 'Arial Rounded MT Bold'),
+        ),
         centerTitle: true,
         backgroundColor: Color.fromRGBO(228, 205, 205, 0.75),
         foregroundColor: Colors.black,
         shadowColor: Colors.black,
         elevation: 20,
       ),
-      body: Container(
-          constraints: const BoxConstraints.expand(),
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: NetworkImage(
-                    'https://cdn.discordapp.com/attachments/1033448117703561326/1033448248385478738/AppBackground.png'),
-                fit: BoxFit.cover),
-          ),
-
-          //* Profile page body of the person viewing the app.
-
-          child: Container(
-              alignment: Alignment.center,
-              constraints: const BoxConstraints.expand(),
-              decoration: const BoxDecoration(
+      body: SafeArea(
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 1,
+                decoration: const BoxDecoration(
                   image: DecorationImage(
                       image: NetworkImage(
-                          'https://cdn.discordapp.com/attachments/1033448117703561326/1033448248385478738/AppBackground.png'),
-                      fit: BoxFit.cover)),
-              child: PhysicalModel(
-                color: Colors.transparent,
-                shadowColor: Colors.black,
-                elevation: 20,
-                child: Container(
-                  width: 350,
-                  height: 600,
-                  decoration: BoxDecoration(
-                      color: Color.fromRGBO(228, 205, 205, 0.75),
-                      borderRadius: BorderRadius.circular(15)),
+                      'https://cdn.discordapp.com/attachments/1033448117703561326/1033448248385478738/AppBackground.png'),
+                  fit: BoxFit.cover),
                 ),
-              ))),
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment: AlignmentDirectional(0, -0.9),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.45,
+                        height: MediaQuery.of(context).size.height * 0.2,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: AlignmentDirectional(0, -0.5),
+                      child: Text(
+                        '[Name]',
+                        style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: 22,
+                            ),
+                      ),
+                    ),
+                    Align(
+                      alignment: AlignmentDirectional(0, -0.2),
+                      child: Text(
+                        '[emial]',
+                        style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: 18,
+                            ),
+                      ),
+                    ),
+                    Align(
+                      alignment: AlignmentDirectional(0, -0.3),
+                      child: Text(
+                        '[phone number]',
+                        style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: 18,
+                            ),
+                      ),
+                    ),
+                    Align(
+                      alignment: AlignmentDirectional(0, -0.4),
+                      child: Text(
+                        '[user id]',
+                        style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: 22,
+                            ),
+                      ),
+                    ),
+                    Align(
+                      alignment: AlignmentDirectional(0, 0.62),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.75,
+                        height: MediaQuery.of(context).size.height * 0.4,
+                        decoration: BoxDecoration(
+                          color: Color(0x77FFFFFF),
+                          // ignore: prefer_const_literals_to_create_immutables
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 10,
+                              color: Color(0x33000000),
+                              offset: Offset(5, 5),
+                            )
+                          ],
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Stack(
+                          children: [
+                            Align(
+                              alignment: AlignmentDirectional(-0.85, -0.9),
+                              child: Text(
+                                'Resolved',
+                                style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: 25,
+                                    ),
+                              ),
+                            ),
+                            Align(
+                              alignment: AlignmentDirectional(0, -0.14),
+                              child: Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 2, 0, 2),
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.09,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(25),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        10, 10, 10, 10),
+                                    child: Text(
+                                      '[Issue]',
+                                      style: TextStyle(
+                                            fontFamily: 'Montserrat',
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: AlignmentDirectional(-1, -0.61),
+                              child: Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 2, 0, 2),
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.07,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(25),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        10, 10, 10, 10),
+                                    child: Text(
+                                      '[Issue]',
+                                      style: TextStyle(
+                                            fontFamily: 'Montserrat',
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
       bottomNavigationBar: BottomAppBar(
         color: Color.fromRGBO(161, 91, 91, 0.75),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: const [
+          children:  [
             IconButton(
               onPressed: null,
               icon: Icon(Icons.warning_rounded),
@@ -810,7 +950,10 @@ class Profile extends StatelessWidget {
               iconSize: 36,
             ),
             IconButton(
-              onPressed: null,
+              onPressed: () {
+                Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => Profile()));
+              },
               icon: Icon(Icons.person),
               tooltip: 'Profile',
               iconSize: 36,
@@ -822,16 +965,21 @@ class Profile extends StatelessWidget {
   }
 }
 
-class AdminPost extends StatelessWidget {
-  AdminPost({Key? key}) : super(key: key);
 
+
+
+class AdminPost extends StatelessWidget {
+   AdminPost({Key? key}) : super(key: key);
+  
   TextEditingController headingController = TextEditingController();
-  TextEditingController descriptionController = TextEditingController();
-  TextEditingController requirementsController = TextEditingController();
+  TextEditingController descriptionController= TextEditingController();
+  TextEditingController requirementsController= TextEditingController();
   @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+
         title:
             Text('Post', style: TextStyle(fontFamily: 'Arial Rounded MT Bold')),
         centerTitle: true,
@@ -839,6 +987,7 @@ class AdminPost extends StatelessWidget {
         foregroundColor: Colors.black,
         shadowColor: Colors.black,
         elevation: 20,
+        
       ),
       body: Container(
         constraints: const BoxConstraints.expand(),
@@ -922,8 +1071,10 @@ class AdminPost extends StatelessWidget {
                 ),
               ),
               TextButton(
-                  onPressed: () {},
-                  child: Container(
+                  onPressed: ()  {
+                    
+                    },
+              child: Container(
                     alignment: Alignment.center,
                     width: 200,
                     height: 50,
@@ -979,9 +1130,9 @@ class AdminPost extends StatelessWidget {
 class UserPost extends StatelessWidget {
   UserPost({Key? key}) : super(key: key);
 
-  TextEditingController userheader = TextEditingController();
-  TextEditingController userdescription = TextEditingController();
-  TextEditingController userreference = TextEditingController();
+  TextEditingController userheader= TextEditingController();
+  TextEditingController userdescription =  TextEditingController();
+  TextEditingController userreference =  TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -1018,131 +1169,102 @@ class UserPost extends StatelessWidget {
             decoration: BoxDecoration(
                 color: Color.fromRGBO(228, 205, 205, 0.75),
                 borderRadius: BorderRadius.circular(15)),
-            child: PhysicalModel(
-              color: Colors.transparent,
-              shadowColor: Colors.black,
-              elevation: 20,
-              child: Container(
-                width: 350,
-                height: 300,
+            child:PhysicalModel(
+          color: Colors.transparent,
+          shadowColor: Colors.black,
+          elevation: 20,
+          child: Container(
+            width: 350,
+            height: 300,
+            decoration: BoxDecoration(
+                color: Color.fromRGBO(228, 205, 205, 0.75),
+                borderRadius: BorderRadius.circular(15)),
+            child: ListView(children: [
+              Container(
+                alignment: Alignment.center,
+                width: 200,
+                height: 50,
+                margin: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                    color: Color.fromRGBO(228, 205, 205, 0.75),
-                    borderRadius: BorderRadius.circular(15)),
-                child: ListView(children: [
-                  Container(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Color.fromRGBO(161, 91, 91, 0.75)),
+                child: Text(
+                  'Create a Post',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w100,
+                    fontSize: 24,
+                    fontFamily: 'Arial Rounded MT Bold',
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.all(10),
+                child: TextFormField(
+                  controller: userheader,
+                  textAlign: TextAlign.left,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(color: Colors.grey, width: 0.0)),
+                    labelText: 'Heading',
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.all(10),
+                child: TextFormField(
+                  controller: userdescription,
+                  textAlign: TextAlign.left,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(color: Colors.grey, width: 0.0)),
+                    labelText: 'Description',
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.all(10),
+                child: TextFormField(
+                  controller: userreference,
+                  textAlign: TextAlign.left,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(color: Colors.grey, width: 0.0)),
+                    labelText: 'Requirements',
+                  ),
+                ),
+              ),
+              TextButton(
+                  onPressed: ()  {
+                    
+                    },
+              child: Container(
                     alignment: Alignment.center,
                     width: 200,
                     height: 50,
                     margin: EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Color.fromRGBO(161, 91, 91, 0.75)),
+                      borderRadius: BorderRadius.circular(20),
+                      color: Color.fromRGBO(161, 91, 91, 0.75),
+                    ),
                     child: Text(
-                      'Post for Help',
+                      'Post',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontWeight: FontWeight.w100,
-                        fontSize: 24,
                         fontFamily: 'Arial Rounded MT Bold',
+                        fontSize: 20,
                         color: Colors.black,
                       ),
                     ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.all(5),
-                    child: TextFormField(
-                      controller: userheader,
-                      textAlign: TextAlign.left,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: Colors.grey, width: 0.0)),
-                        labelText: 'Heading',
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.all(5),
-                    child: TextFormField(
-                      controller: userdescription,
-                      textAlign: TextAlign.left,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: Colors.grey, width: 0.0)),
-                        labelText: 'Description',
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.all(5),
-                    child: TextFormField(
-                      controller: userreference,
-                      textAlign: TextAlign.left,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: Colors.grey, width: 0.0)),
-                        labelText: 'Requirements',
-                      ),
-                    ),
-                  ),
-                  //* This button is for picking up the image
-                  TextButton(
-                      onPressed: () async {
-                        final XFile? image = await _picker.pickImage(
-                            source: ImageSource.gallery);
-                        if (image == null) return;
-
-                        final bytes = await io.File(image.path).readAsBytes();
-                        String img64 = base64Encode(bytes);
-                      },
-                      child: Container(
-                        alignment: Alignment.center,
-                        width: 200,
-                        height: 40,
-                        margin: EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Color.fromRGBO(228, 205, 205, 0.01),
-                        ),
-                        child: Text(
-                          'Upload Image >>',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: 'Arial Rounded MT Bold',
-                            fontSize: 16,
-                            color: Colors.black,
-                          ),
-                        ),
-                      )),
-
-//* This button is for  completing the uploading process and getting 200 response from the server
-                  TextButton(
-                      onPressed: () {},
-                      child: Container(
-                        alignment: Alignment.center,
-                        width: 200,
-                        height: 50,
-                        margin: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Color.fromRGBO(161, 91, 91, 0.75),
-                        ),
-                        child: Text(
-                          'Post',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: 'Arial Rounded MT Bold',
-                            fontSize: 20,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ))
-                ]),
-              ),
-            ),
+                  ))
+            ]),
           ),
+        ),
+      ),
         ),
       ),
       bottomNavigationBar: BottomAppBar(
