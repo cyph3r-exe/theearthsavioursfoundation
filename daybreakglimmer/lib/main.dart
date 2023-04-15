@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:image_picker/image_picker.dart';
 
 void main() => {
       SystemChrome.setSystemUIOverlayStyle(
@@ -259,19 +260,21 @@ class Homepage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+
                 actions: <Widget>[
           IconButton(
             onPressed: () {
-              Navigator.pushReplacement(
+              Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          UserPost())); //replace with posts screen
+                          UserPost())); 
             },
             icon: Icon(Icons.post_add),
             iconSize: 36,
             tooltip: 'Help Post',
-          )
+          ),
+          
         ],
         title:
             Text('Home', style: TextStyle(fontFamily: 'Arial Rounded MT Bold')),
@@ -309,7 +312,7 @@ class Homepage extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {
-                Navigator.pushReplacement(
+                Navigator.push(
             context, MaterialPageRoute(builder: (context) => Profile()));
               },
               icon: Icon(Icons.person),
@@ -1145,7 +1148,11 @@ class UserPost extends StatelessWidget {
         foregroundColor: Colors.black,
         shadowColor: Colors.black,
         elevation: 20,
+        leading: IconButton(onPressed: () {
+          Navigator.pop(context);
+        }, icon: Icon(Icons.arrow_back)),
       ),
+
       body: Container(
         alignment: Alignment.center,
         constraints: const BoxConstraints.expand(),
@@ -1238,6 +1245,30 @@ class UserPost extends StatelessWidget {
                   ),
                 ),
               ),
+              // Capture Image
+              TextButton(
+                  onPressed: ()  {
+                    
+                    },
+              child: Container(
+                    alignment: Alignment.center,
+                    width: 200,
+                    height: 25,
+                    margin: EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Color.fromRGBO(228, 205, 205, 0.001),
+                    ),
+                    child: Text(
+                      'Upload Image',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Arial Rounded MT Bold',
+                        fontSize: 18,
+                        color: Colors.black,
+                      ),
+                    ),
+                  )),
               TextButton(
                   onPressed: ()  {
                     
